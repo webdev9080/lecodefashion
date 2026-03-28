@@ -4,13 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 
-export default function BottomNav() {
+interface BottomNavProps {
+  className?: string; // 🔹 Ajouter className en prop
+}
+
+export default function BottomNav({ className }: BottomNavProps) {
   const pathname = usePathname();
   const [notifCount, setNotifCount] = useState<number>(0);
   const [pulse, setPulse] = useState(false);
   const prevCount = useRef<number>(0);
 
-  // Fonction pour récupérer le nombre de notifications
   const fetchNotifCount = async () => {
     try {
       const res = await fetch("/api/notifications/count");
@@ -18,10 +21,9 @@ export default function BottomNav() {
       const data = await res.json();
       const count = data.count || 0;
 
-      // Animation pulse si le nombre change
       if (count !== prevCount.current && prevCount.current !== 0) {
         setPulse(true);
-        setTimeout(() => setPulse(false), 5000); // durée de l'animation
+        setTimeout(() => setPulse(false), 5000);
       }
 
       prevCount.current = count;
@@ -33,7 +35,7 @@ export default function BottomNav() {
 
   useEffect(() => {
     fetchNotifCount();
-    const interval = setInterval(fetchNotifCount, 10000); // rafraîchit toutes les 10s
+    const interval = setInterval(fetchNotifCount, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -45,7 +47,7 @@ export default function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white border-t shadow-inner z-50">
+    <nav className={`bg-white border-t shadow-inner z-50 ${className || ""}`}>
       <div className="flex justify-around py-3 text-sm relative">
         {links.map((link) => (
           <Link

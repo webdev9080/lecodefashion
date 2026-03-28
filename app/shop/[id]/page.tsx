@@ -121,7 +121,7 @@ Est-il disponible ?`;
             <h2 className="text-lg font-semibold mb-2">
               Description
             </h2>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-center text-gray-700 leading-relaxed">
               {product.description ||
                 "Produit de qualité disponible chez Lecodefashion."}
             </p>

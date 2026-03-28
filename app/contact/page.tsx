@@ -131,7 +131,7 @@ export default function ContactPage() {
 
           <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition">
             <h3 className="text-xl font-semibold mb-2">✉️ Email</h3>
-            <p className="text-gray-600">contact@lecodefashion.tg</p>
+            <p className="text-gray-600">webdev9080@gmail.com</p>
           </div>
 
           {/* Réseaux */}
