@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
@@ -15,12 +16,17 @@ export interface Product {
 export default function ShopCard({ product }: { product: Product }) {
   const whatsappNumber = "22890805252";
 
+  // ✅ Optimisation Cloudinary (auto format + qualité)
+  const optimizedImage = product.image
+    ? product.image.replace("/upload/", "/upload/f_auto,q_auto/")
+    : "/images/placeholder.png";
+
   const handleWhatsAppBuy = () => {
     const message = `Bonjour, je suis intéressé par ce produit :
 
 Nom : ${product.name}
 Prix : ${product.price} FCFA
-Image : https://tonsite.com${product.image}
+Image : ${product.image}
 
 Est-il toujours disponible ?`;
 
@@ -29,45 +35,55 @@ Est-il toujours disponible ?`;
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-3 hover:shadow-lg transition flex flex-col">
+    <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 flex flex-col overflow-hidden group">
       
-      {/* Image */}
-      <div className="relative w-full h-48">
+      {/* 🖼️ Image */}
+      <div className="relative w-full h-48 overflow-hidden">
         <Image
-  src={product.image}
-  alt={product.name || "Produit Lecodefashion"}
-  fill
-  sizes="(max-width: 768px) 100vw, 
-         (max-width: 1024px) 50vw, 
-         25vw"
-  className="object-cover rounded-lg"
-/>
+          src={optimizedImage}
+          alt={product.name || "Produit Lecodefashion"}
+          fill
+          sizes="(max-width: 768px) 100vw, 
+                 (max-width: 1024px) 50vw, 
+                 25vw"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = "/images/placeholder.png";
+          }}
+        />
       </div>
 
-      {/* Infos */}
-      <h3 className="font-semibold mt-3">{product.name}</h3>
-      <p className="text-green-600 font-bold">{product.price} FCFA</p>
+      {/* 📦 Infos */}
+      <div className="p-3 flex flex-col flex-1">
+        <h3 className="font-semibold text-sm md:text-base line-clamp-2">
+          {product.name}
+        </h3>
 
-      {/* Boutons */}
-      <div className="flex gap-2 mt-3">
-        
-        {/* WhatsApp Buy */}
-        <button
-          onClick={handleWhatsAppBuy}
-          className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-2 rounded font-semibold hover:bg-green-600 transition"
-        >
-          <FaWhatsapp />
-          Buy
-        </button>
+        <p className="text-green-600 font-bold mt-1">
+          {product.price} FCFA
+        </p>
 
-        {/* Voir plus*/}
-        <Link
-          href={`/shop/${product._id}`}
-          className="flex-1 text-center bg-blue-500 text-white py-2 rounded font-semibold hover:bg-blue-600 transition"
-        >
-          Voir plus
-        </Link>
+        {/* 🛒 Actions */}
+        <div className="flex gap-2 mt-auto pt-3">
+          
+          {/* WhatsApp */}
+          <button
+            onClick={handleWhatsAppBuy}
+            className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-2 rounded-lg text-sm font-semibold hover:bg-green-600 transition"
+          >
+            <FaWhatsapp />
+            Acheter
+          </button>
 
+          {/* Voir */}
+          <Link
+            href={`/shop/${product._id}`}
+            className="flex-1 text-center bg-blue-500 text-white py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 transition"
+          >
+            Voir
+          </Link>
+
+        </div>
       </div>
     </div>
   );

@@ -1,15 +1,25 @@
 import { NextResponse } from "next/server";
 import connectMongo from "@/lib/mongodb";
 import Product from "@/models/Products";
-import fs from "fs";
-import path from "path";
+import { v2 as cloudinary } from "cloudinary";
 
+// 🔑 Config Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
+  api_secret: process.env.CLOUDINARY_API_SECRET!,
+});
+
+// ✅ GET tous les produits
 export async function GET() {
   await connectMongo();
+
   const products = await Product.find().sort({ createdAt: -1 });
+
   return NextResponse.json(products);
 }
 
+// ✅ POST créer produit
 export async function POST(req: Request) {
   await connectMongo();
 
@@ -21,43 +31,60 @@ export async function POST(req: Request) {
     const category = formData.get("category") as string;
     const image = formData.get("image") as File;
 
-    if (!image) {
-      return NextResponse.json({ error: "Image manquante" }, { status: 400 });
+    if (!name || !price || !category) {
+      return NextResponse.json(
+        { error: "Champs requis manquants" },
+        { status: 400 }
+      );
     }
 
-    // 📁 Dossier upload
-    const uploadDir = path.join(process.cwd(), "public/images");
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    if (!image || image.size === 0) {
+      return NextResponse.json(
+        { error: "Image obligatoire" },
+        { status: 400 }
+      );
     }
 
-    // 📸 Convertir File → Buffer
+    // 🔥 Convertir image → buffer
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // 📄 Nom fichier unique
-    const fileName = `${Date.now()}-${image.name}`;
-    const filePath = path.join(uploadDir, fileName);
+    // 🔥 Upload Cloudinary
+    const uploaded = await new Promise<{
+      secure_url: string;
+      public_id: string;
+    }>((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: "lecodefashion",
+          resource_type: "image",
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result as any);
+        }
+      );
 
-    // 💾 Sauvegarde fichier
-    fs.writeFileSync(filePath, buffer);
+      stream.end(buffer);
+    });
 
-    const imageUrl = `/images/${fileName}`;
-
-    // 💾 Sauvegarde Mongo
-    const product = new Product({
+    // 💾 Sauvegarde MongoDB
+    const product = await Product.create({
       name,
       price,
       category,
-      image: imageUrl,
-      link: "#",
+      image: uploaded.secure_url,
+      cloudinary_id: uploaded.public_id, // 🔥 important pour delete
     });
 
-    await product.save();
-
     return NextResponse.json(product);
+
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+    console.error("POST ERROR:", error);
+
+    return NextResponse.json(
+      { error: "Erreur serveur" },
+      { status: 500 }
+    );
   }
 }
