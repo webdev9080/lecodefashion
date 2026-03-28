@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
 
 import Navbar from "@/components/Navbar";
 import BottomNav from "@/components/BottomNav";
@@ -33,6 +34,9 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${poppins.variable} ${inter.variable} h-full`}>
       <body className="flex flex-col min-h-screen font-[var(--font-inter)] bg-gray-50">
+        
+        {/* Analytics de Vercel */}
+        <Analytics />
 
         <UserProvider>
           <ToastProvider>
@@ -43,6 +47,7 @@ export default function RootLayout({
             {/* 🔥 MAIN (prend tout l’espace) */}
             <main className="flex-grow pt-20 pb-24">
               {children}
+              
             </main>
 
             {/* 📱 BOTTOM NAV (fixe mobile) */}
