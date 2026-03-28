@@ -77,12 +77,13 @@ export async function DELETE(
 
 //Partie Fonction PUT pour modifier
 
-export async function PUT(req: Request, context: { params: { id: string } }) {
+export async function PUT(
+  req: Request,
+  context: { params: Promise<{ id: string }> } // ✅ CORRIGÉ
+) {
   await connectMongo();
 
-  // ⚡ Important : params est une Promise, on récupère l'id correctement
-  const params = await context.params; // <-- nouveau
-  const id = params.id;
+  const { id } = await context.params; // ✅ CORRIGÉ
 
   try {
     const formData = await req.formData();
@@ -92,19 +93,40 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
     const image = formData.get("image") as File | null;
 
     const product = await Product.findById(id);
-    if (!product) return NextResponse.json({ error: "Produit non trouvé" }, { status: 404 });
 
-    if (image) {
+    if (!product) {
+      return NextResponse.json(
+        { error: "Produit non trouvé" },
+        { status: 404 }
+      );
+    }
+
+    // 🖼️ Upload nouvelle image
+    if (image && image.size > 0) {
       const uploadDir = path.join(process.cwd(), "public/images");
-      if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+
       const bytes = await image.arrayBuffer();
       const buffer = Buffer.from(bytes);
       const fileName = `${Date.now()}-${image.name}`;
-      fs.writeFileSync(path.join(uploadDir, fileName), buffer);
 
-      // Supprimer l'ancienne image
-      if (product.image && fs.existsSync(path.join(process.cwd(), "public", product.image))) {
-        fs.unlinkSync(path.join(process.cwd(), "public", product.image));
+      const filePath = path.join(uploadDir, fileName);
+      fs.writeFileSync(filePath, buffer);
+
+      // 🗑️ Supprimer ancienne image
+      if (product.image) {
+        const oldPath = path.join(
+          process.cwd(),
+          "public",
+          product.image.replace(/^\/+/, "")
+        );
+
+        if (fs.existsSync(oldPath)) {
+          fs.unlinkSync(oldPath);
+        }
       }
 
       product.image = `/images/${fileName}`;
@@ -115,9 +137,14 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
     product.category = category;
 
     await product.save();
+
     return NextResponse.json(product);
+
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+    console.error("PUT ERROR:", error);
+    return NextResponse.json(
+      { error: "Erreur serveur" },
+      { status: 500 }
+    );
   }
 }
