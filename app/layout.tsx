@@ -10,6 +10,11 @@ import Footer from "@/components/Footer";
 import { UserProvider } from "@/context/UserProvider";
 import { ToastProvider } from "@/context/ToastProvider";
 
+// 🔥 IMPORT SEO
+import { generateSEO } from "@/lib/seo";
+
+
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
@@ -21,10 +26,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata: Metadata = {
+// 🔥 SEO GLOBAL
+export const metadata: Metadata = generateSEO({
   title: "Lecodefashion",
-  description: "Boutique de mode tendance à petit prix",
-};
+  description:
+    "Boutique de vêtements tendance à Lomé (Agbalépédo). Friperie femme, accessoires homme à petit prix.",
+  url: "/",
+});
 
 export default function RootLayout({
   children,

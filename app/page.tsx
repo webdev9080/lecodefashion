@@ -64,7 +64,7 @@ export default function Home() {
                 href={product.link}
                 className="text-sm text-blue-500"
               >
-                Voir plus
+                Acheter
               </Link>
               
             </div>

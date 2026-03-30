@@ -72,7 +72,7 @@ export default function NotificationsList() {
     return <p className="text-center mt-10">Aucune notification</p>;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col w-57 gap-4">
       {notifications.map((n) => (
         <div
           key={n._id}

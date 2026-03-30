@@ -40,7 +40,7 @@ export default function CreateNotificationPage() {
     <div className="p-2 max-w-xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">Envoyer une notification</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-57">
         <input
           placeholder="Titre"
           value={form.title}

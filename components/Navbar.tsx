@@ -49,7 +49,7 @@ export default function Navbar() {
 
           {/* LOGO */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-12 h-12 rounded-full overflow-hidden">
+            <div className="w-32 h-16 md:w-32 md:h-20 lg:w-32 lg:h-24 rounded-full relative overflow-hidden">
               <Image
                 src="/images/logo2.png"
                 alt="Lecodefashion logo"
