@@ -16,7 +16,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <aside className="mt-4 w-30 bg-gray-900 text-white h-auto p-1 flex flex-col">
+    <aside className="mt-4 md:mt-4 w-30 bg-gray-900 text-white h-auto p-4 flex flex-col">
       <h2 className="text-xl text-center font-bold mb-6">Dashboard</h2>
 
       <nav className="flex flex-col gap-3 text-center">

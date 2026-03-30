@@ -4,16 +4,16 @@ import LogoutButton from "@/components/LogoutButton";
 
 export default function NavbarDashboard() {
   return (
-    <header className="mt-4 py-2 bg-white shadow flex justify-between items-center">
+    <header className="mt-4 bg-gray-900 py-4 shadow flex justify-between items-center">
       
       {/*}<h1 className="font-bold text-small text-center">
         Lecodefashion
       </h1>*/}
 
-      <div className="flex items-center gap-2 px-2">
-        <button className="bg-green-500 text-white text-sm px-2 py-1 rounded hover:bg-green-600 transition">
+      <div className="flex items-center gap-2 px-2 py-2 md:py-4">
+        {/*}<button className="text-white text-sm px-2 py-1 rounded hover:bg-green-600 transition">
           Admin
-        </button>
+        </button>*/}
         <div>
           <LogoutButton />
         </div>

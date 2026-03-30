@@ -84,18 +84,18 @@ export default function DashboardClient() {
       {/* 📊 STATISTIQUES */}
       {loading ? <StatsSkeleton /> : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="bg-white p-2 rounded-xl shadow text-center">
+          <Link href="/dashboard/products"><div className="bg-white p-2 rounded-xl shadow text-center">
             <h2 className="text-2xl font-bold">{products.length}</h2>
             <p className="text-gray-500">Produits</p>
-          </div>
-          <div className="bg-white p-2 rounded-xl shadow text-center">
+          </div></Link>
+          <Link href="#"><div className="bg-white p-2 rounded-xl shadow text-center">
             <h2 className="text-2xl">💰</h2>
             <p className="text-gray-500">Ventes</p>
-          </div>
-          <div className="bg-white p-2 rounded-xl shadow text-center">
+          </div></Link>
+          <Link href="#"><div className="bg-white p-2 rounded-xl shadow text-center">
             <h2 className="text-2xl">📦</h2>
             <p className="text-gray-500">Commandes</p>
-          </div>
+          </div></Link>
         </div>
       )}
 

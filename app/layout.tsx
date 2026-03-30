@@ -28,7 +28,7 @@ const inter = Inter({
 
 // 🔥 SEO GLOBAL
 export const metadata: Metadata = generateSEO({
-  title: "Lecodefashion",
+  title: "Home",
   description:
     "Boutique de vêtements tendance à Lomé (Agbalépédo). Friperie femme, accessoires homme à petit prix.",
   url: "/",
