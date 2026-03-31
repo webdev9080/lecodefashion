@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import Navbar from "@/components/Navbar";
 import BottomNav from "@/components/BottomNav";
@@ -47,6 +48,7 @@ export default function RootLayout({
         
         {/* Analytics de Vercel */}
         <Analytics />
+        <SpeedInsights/>
 
         <UserProvider>
           <ToastProvider>
