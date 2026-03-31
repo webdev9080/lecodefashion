@@ -1,37 +1,53 @@
+// lib/seo.ts
+import type { Metadata } from "next";
+
+// ✅ TYPE DEFINI ICI
+interface SEOProps {
+  title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
+}
+
+// 🔥 FONCTION SEO GLOBALE
 export function generateSEO({
   title,
   description,
   image,
   url,
 }: SEOProps): Metadata {
-  const baseUrl = "https://lecodefashion.vercel.app";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
   const defaultTitle = "Lecodefashion - Boutique de vêtements à Lomé";
   const defaultDescription =
-    "Découvrez des vêtements tendance pour femmes et accessoires hommes à petit prix à Lomé.";
+    "Découvrez les dernières tendances de mode à petit prix chez Lecodefashion.";
 
-  const seoTitle = title ? `${title} | Lecodefashion` : defaultTitle;
-  const seoDescription = description || defaultDescription;
-  const seoImage = image || `${baseUrl}/images/hero1.jpg`;
-  const seoUrl = url ? `${baseUrl}${url}` : baseUrl;
+  const finalTitle = title ? `${title} | Lecodefashion` : defaultTitle;
+  const finalDescription = description || defaultDescription;
+
+  const fullUrl = url ? `${baseUrl}${url}` : baseUrl;
+  const fullImage = image
+    ? image.startsWith("http")
+      ? image
+      : `${baseUrl}${image}`
+    : `${baseUrl}/images/logo2.png`;
 
   return {
-    metadataBase: new URL(baseUrl), // 🔥 important
-
-    title: seoTitle,
-    description: seoDescription,
+    title: finalTitle,
+    description: finalDescription,
 
     openGraph: {
-      title: seoTitle,
-      description: seoDescription,
-      url: seoUrl,
+      title: finalTitle,
+      description: finalDescription,
+      url: fullUrl,
       siteName: "Lecodefashion",
       images: [
         {
-          url: seoImage,
-          width: 1200,
-          height: 630,
-          alt: seoTitle,
+          url: fullImage,
+          width: 800,
+          height: 600,
+          alt: finalTitle,
         },
       ],
       locale: "fr_FR",
@@ -40,9 +56,11 @@ export function generateSEO({
 
     twitter: {
       card: "summary_large_image",
-      title: seoTitle,
-      description: seoDescription,
-      images: [seoImage],
+      title: finalTitle,
+      description: finalDescription,
+      images: [fullImage],
     },
+
+    metadataBase: new URL(baseUrl),
   };
 }
