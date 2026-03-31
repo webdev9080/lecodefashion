@@ -12,6 +12,7 @@ import { ToastProvider } from "@/context/ToastProvider";
 
 // 🔥 IMPORT SEO
 import { generateSEO } from "@/lib/seo";
+import ChatWidget from "@/components/ChatWidget";
 
 
 
@@ -42,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${poppins.variable} ${inter.variable} h-full`}>
       <body className="flex flex-col min-h-screen font-[var(--font-inter)] bg-gray-50">
+        <ChatWidget />
         
         {/* Analytics de Vercel */}
         <Analytics />
