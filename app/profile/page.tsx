@@ -9,5 +9,9 @@ export const metadata = generateSEO({
 });
 
 export default function ProfilePage() {
-  return <ProfileClient />;
+  return (
+    <div className="items-center">
+      <ProfileClient />
+    </div>
+    )
 }

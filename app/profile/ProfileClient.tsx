@@ -27,7 +27,19 @@ export default function ProfileClient() {
   }, [user]);
 
   if (loading) return <ProfileSkeleton />;
-  if (!user) return <p className="text-center mt-20">Utilisateur introuvable</p>;
+  if (!user) return (
+    
+    <div className="h-[60vh] mt-[95px] flex flex-col items-center mt-4">
+      <p className="text-center mt-20">Utilisateur introuvable, Veillez-vous s'inscrire ou vous connecter !!!</p>
+      
+      <div className="flex gap-2 items-center justify-between mt-4">
+        <Link href="/signup"><button className="mt-2 p-2 rounded-full bg-blue-600 text-white">S'inscrire</button></Link>
+        <Link href="/login"><button className="mt-2 p-2 rounded-full bg-green-600 text-white">Se Connecter</button></Link>
+      </div>
+      
+    </div>
+    
+    ) 
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 md:px-20 py-10">
