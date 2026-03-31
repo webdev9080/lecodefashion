@@ -1,30 +1,23 @@
-import type { Metadata } from "next";
-
-interface SEOProps {
-  title?: string;
-  description?: string;
-  image?: string;
-  url?: string;
-}
-
-const baseUrl = "https://lecodefashion.vercel.app";
-
 export function generateSEO({
   title,
   description,
   image,
   url,
 }: SEOProps): Metadata {
+  const baseUrl = "https://lecodefashion.vercel.app";
+
   const defaultTitle = "Lecodefashion - Boutique de vêtements à Lomé";
   const defaultDescription =
     "Découvrez des vêtements tendance pour femmes et accessoires hommes à petit prix à Lomé.";
 
   const seoTitle = title ? `${title} | Lecodefashion` : defaultTitle;
   const seoDescription = description || defaultDescription;
-  const seoImage = image || `${baseUrl}/images/logo2.png`;
+  const seoImage = image || `${baseUrl}/images/hero1.jpg`;
   const seoUrl = url ? `${baseUrl}${url}` : baseUrl;
 
   return {
+    metadataBase: new URL(baseUrl), // 🔥 important
+
     title: seoTitle,
     description: seoDescription,
 
@@ -36,8 +29,8 @@ export function generateSEO({
       images: [
         {
           url: seoImage,
-          width: 800,
-          height: 600,
+          width: 1200,
+          height: 630,
           alt: seoTitle,
         },
       ],
