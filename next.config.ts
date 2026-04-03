@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 
   images: {
     remotePatterns: [
-      // ✅ LOCAL (dev)
+      // ✅ LOCAL DEV
       {
         protocol: "http",
         hostname: "localhost",
@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
         pathname: "/uploads/**",
       },
 
-      // 🔥 CLOUDINARY (OBLIGATOIRE)
+      // 🔥 CLOUDINARY
       {
         protocol: "https",
         hostname: "res.cloudinary.com",

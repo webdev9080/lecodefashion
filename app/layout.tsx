@@ -14,6 +14,8 @@ import { ToastProvider } from "@/context/ToastProvider";
 // 🔥 IMPORT SEO
 import { generateSEO } from "@/lib/seo";
 import ChatWidget from "@/components/ChatWidget";
+import InstallPWAButton from "@/components/InstallPWAButton";
+import RegisterSW from "@/components/RegisterSW";
 
 
 
@@ -29,12 +31,22 @@ const inter = Inter({
 });
 
 // 🔥 SEO GLOBAL
-export const metadata: Metadata = generateSEO({
-  title: "Home",
-  description:
-    "Boutique de vêtements tendance à Lomé (Agbalépédo). Friperie femme, accessoires homme à petit prix.",
-  url: "/",
-});
+export const metadata: Metadata = {
+  ...generateSEO({
+    title: "Home",
+    description:
+      "Boutique de vêtements tendance à Lomé (Agbalépédo). Friperie femme, accessoires homme à petit prix.",
+    url: "/",
+  }),
+
+  // 🔥 PWA
+  manifest: "/manifest.json",
+
+  icons: {
+    icon: "/images/logo2.png",
+    apple: "/images/logo2.png",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -44,7 +56,6 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${poppins.variable} ${inter.variable} h-full`}>
       <body className="flex flex-col min-h-screen font-[var(--font-inter)] bg-gray-50">
-        <ChatWidget />
         
         {/* Analytics de Vercel */}
         <Analytics />
@@ -67,10 +78,14 @@ export default function RootLayout({
 
             {/* 🔻 FOOTER toujours en bas */}
             <Footer />
+            <ChatWidget />
 
           </ToastProvider>
         </UserProvider>
-
+        
+        {/* 🔥 Bouton installer */}
+        <InstallPWAButton />
+        <RegisterSW />
       </body>
     </html>
   );
