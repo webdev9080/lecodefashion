@@ -43,8 +43,8 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 
   icons: {
-    icon: "/images/logo.png",
-    apple: "/images/logo.png",
+    icon: "/images/icon.png",
+    apple: "/images/icon.png",
   },
 };
 

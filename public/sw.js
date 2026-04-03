@@ -1,4 +1,4 @@
-const CACHE_NAME = "lecodefashion-v3";
+const CACHE_NAME = "lecodefashion-v3.1";
 
 // Assets statiques à pré-cacher
 const STATIC_ASSETS = [
@@ -9,7 +9,7 @@ const STATIC_ASSETS = [
   "/notifications",
   "/favicon.ico",
   "/globals.css",
-  "/images/logo.png",
+  "/images/icon.png",
 ];
 
 // Intercepter les requêtes pour images produits Cloudinary
