@@ -1,4 +1,4 @@
-const CACHE_NAME = "lecodefashion-v3.1";
+const CACHE_NAME = "lecodefashion-v4";
 
 // Assets statiques à pré-cacher
 const STATIC_ASSETS = [
