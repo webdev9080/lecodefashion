@@ -50,6 +50,7 @@ export default function Home() {
                 alt={product.name}
                 width={300}
                 height={300}
+                priority
                 className="rounded-lg object-cover"
               />
 

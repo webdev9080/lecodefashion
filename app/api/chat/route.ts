@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     // 🧠 prompt intelligent
     const systemPrompt = `
-Tu es un assistant de vente pour Lecodefashion (boutique de prêt-à-porter à Lomé).
+Tu es un assistant de vente pour Lecodefashion (boutique friperie de prêt-à-porter à Lomé).
 
 Objectifs :
 - Aider ${userName} à choisir un produit
@@ -40,7 +40,7 @@ ${context}
 `;
 
     const completion = await openai.chat.completions.create({
-      model: "qwen/qwen3.6-plus-preview:free",
+      model: "nvidia/nemotron-3-super-120b-a12b:free",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: message },
