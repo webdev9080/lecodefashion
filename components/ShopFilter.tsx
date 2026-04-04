@@ -14,7 +14,7 @@ export default function ShopFilter({ onFilter }: ShopFilterProps) {
   const [category, setCategory] = useState<string | "">("");
   const [search, setSearch] = useState("");
 
-  const categories = ["Robes", "Pantalons", "Hauts", "Accessoires", "Jupes"];
+  const categories = ["Robes", "Pantalons", "Hauts", "Accessoires", "Jupes", "Jeans", "Boyfriends", "Combinaisons", "Vestes"];
 
   useEffect(() => {
     const delay = setTimeout(() => {

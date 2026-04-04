@@ -58,7 +58,7 @@ export default function ShopClient() {
   }, [products, filters]);
 
   // 📄 Pagination
-  const perPage = 8;
+  const perPage = 12;
 
   const paginated = useMemo(() => {
     return filtered.slice((page - 1) * perPage, page * perPage);
