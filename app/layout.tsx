@@ -10,6 +10,10 @@ import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
 import { UserProvider } from "@/context/UserProvider";
 import { ToastProvider } from "@/context/ToastProvider";
+import PushProvider from "@/components/PushProvider";
+
+
+
 
 // 🔥 IMPORT SEO
 import { generateSEO } from "@/lib/seo";
@@ -56,6 +60,8 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${poppins.variable} ${inter.variable} h-full`}>
       <body className="flex flex-col min-h-screen font-[var(--font-inter)] bg-gray-50">
+        
+        <PushProvider />
         
         {/* Analytics de Vercel */}
         <Analytics />

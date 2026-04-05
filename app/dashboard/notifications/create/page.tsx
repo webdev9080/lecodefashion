@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useToast } from "@/context/ToastProvider";
 import NotificationsList from "@/components/NotificationsList";
+import SendNotifications from "@/components/SendNotifications";
 
 export default function CreateNotificationPage() {
   const { showToast } = useToast();
@@ -69,6 +70,8 @@ export default function CreateNotificationPage() {
           Envoyer
         </button>
       </form>
+      
+      <SendNotifications />
       
       <div className="mt-4 bg-transparent items-center">
         <h2 className="text-center text-xl">Liste des Notification 🔔</h2>
