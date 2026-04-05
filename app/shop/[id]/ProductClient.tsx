@@ -20,7 +20,13 @@ interface Product {
 }
 
 export default function ProductClient() {
-  const { id } = useParams();
+  const params = useParams<{ id: string }>();
+
+  if (!params || !params.id) {
+  return <p>Erreur : ID manquant</p>;
+}
+
+  const id = params.id;
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 

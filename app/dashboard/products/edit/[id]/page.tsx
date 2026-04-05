@@ -12,10 +12,15 @@ interface Product {
 }
 
 export default function EditProductPage() {
-  const params = useParams();
+  
   const router = useRouter();
-  const { id } = params;
+  const params = useParams<{ id: string }>();
 
+  if (!params || !params.id) {
+  return <p>Erreur : ID manquant</p>;
+}
+
+  const id = params.id;
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ name: "", price: "", category: "" });
@@ -24,17 +29,24 @@ export default function EditProductPage() {
 
   // Récupérer le produit depuis l'API
   useEffect(() => {
-    async function fetchProduct() {
-      const res = await fetch(`/api/products/${id}`);
-      if (!res.ok) return alert("Produit non trouvé !");
-      const data = await res.json();
-      setProduct(data);
-      setForm({ name: data.name, price: data.price.toString(), category: data.category });
-      setPreview(data.image);
-      setLoading(false);
-    }
-    fetchProduct();
-  }, [id]);
+  if (!id) return;
+
+  async function fetchProduct() {
+    const res = await fetch(`/api/products/${id}`);
+    if (!res.ok) return alert("Produit non trouvé !");
+    const data = await res.json();
+    setProduct(data);
+    setForm({
+      name: data.name,
+      price: data.price.toString(),
+      category: data.category,
+    });
+    setPreview(data.image);
+    setLoading(false);
+  }
+
+  fetchProduct();
+}, [id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
