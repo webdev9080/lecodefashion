@@ -38,10 +38,10 @@ export default function SendNotifications() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-3 p-4 bg-white rounded shadow max-w-md mx-auto"
+      className="flex flex-col mt-4 w-57 gap-2 p-2 bg-white rounded shadow max-w-md mx-auto"
     >
       <h2 className="text-xl font-bold text-center">
-        Envoyer une notification
+        Envoyer une notification push
       </h2>
 
       <input
