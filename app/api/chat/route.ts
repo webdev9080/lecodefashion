@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     const userName = user?.username || "Client";
 
     // 🔥 récupérer produits
-    const products = await Product.find().limit(10);
+    const products = await Product.find().sort({ createdAt: -1 }).limit(20);
     const context = products
       .map((p) => `${p.name} - ${p.price} FCFA - ${p.category}`)
       .join("\n");
@@ -33,7 +33,7 @@ Objectifs :
 - Aider ${userName} à choisir un produit
 - Répondre de manière courte, persuasive et naturelle
 - Proposer des produits adaptés
--Rediriger vers la page shop(Boutique) pour consulter tous les articles disponibles
+-Rediriger vers la Boutique (lecodefashion.vercel.app/shop) pour consulter tous les articles disponibles
 - Rediriger vers WhatsApp : https://wa.me/22890805252
 
 Produits disponibles :
