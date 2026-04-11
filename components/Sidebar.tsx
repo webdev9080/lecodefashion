@@ -49,10 +49,15 @@ export default function Sidebar() {
             </span>
           )}
         </Link>
+        
+        <Link href="/blog/create" className="hover:bg-gray-700 p-2 rounded">
+          Blog
+        </Link>
 
         <Link href="/dashboard/orders" className="hover:bg-gray-700 p-2 rounded">
           Commandes
         </Link>
+        
       </nav>
     </aside>
   );

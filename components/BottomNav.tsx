@@ -43,7 +43,7 @@ export default function BottomNav({ className }: BottomNavProps) {
     { name: "Accueil", href: "/", icon: "🏠" },
     { name: "Boutique", href: "/shop", icon: "🛍️" },
     { name: "Notification", href: "/notifications", icon: "🔔", badge: notifCount },
-    { name: "Profil", href: "/profile", icon: "👤" },
+    { name: "Blog", href: "/blog", icon: "▶️" },
   ];
 
   return (
